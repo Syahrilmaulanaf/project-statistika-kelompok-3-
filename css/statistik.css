@@ -1,0 +1,936 @@
+
+
+/* =========================================
+   STATKIT - STATISTIKA DESKRIPTIF
+   Modern, Clean & Professional Design
+========================================= */
+
+/* 1. GLOBAL STYLE */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@500;600;700;800&display=swap');
+
+:root {
+    --primary: #4f46e5;
+    --primary-dark: #3730a3;
+    --primary-light: #eef2ff;
+    --secondary: #7c3aed;
+
+    --background: #f5f7fc;
+    --surface: #ffffff;
+
+    --text: #1e293b;
+    --text-muted: #64748b;
+
+    --border: #e2e8f0;
+    --success: #059669;
+    --danger: #dc2626;
+
+    --shadow: 0 4px 20px rgba(15, 23, 42, 0.05);
+    --shadow-hover: 0 12px 30px rgba(79, 70, 229, 0.12);
+
+    --radius: 16px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--background);
+    color: var(--text);
+    line-height: 1.7;
+    min-height: 100vh;
+}
+
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+.container {
+    width: min(1200px, 92%);
+    margin: 0 auto;
+}
+
+
+/* =========================================
+   2. HEADER & NAVIGATION
+========================================= */
+
+.site-header {
+    background: rgba(255, 255, 255, 0.95);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+}
+
+.site-header .container {
+    min-height: 76px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.brand {
+    font-family: 'Poppins', sans-serif;
+    font-size: 27px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    text-decoration: none;
+    color: var(--primary);
+}
+
+.brand::before {
+    content: '';
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    background: var(--secondary);
+    border-radius: 3px;
+    margin-right: 8px;
+    transform: rotate(45deg);
+}
+
+.main-nav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.main-nav a {
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 14px;
+    font-weight: 600;
+    padding: 10px 17px;
+    border-radius: 10px;
+    transition: all 0.25s ease;
+}
+
+.main-nav a:hover {
+    color: var(--primary);
+    background: var(--primary-light);
+}
+
+.main-nav a[aria-current="page"] {
+    color: var(--primary);
+    background: var(--primary-light);
+}
+
+
+/* =========================================
+   3. PAGE HEADER
+========================================= */
+
+main.container {
+    padding-top: 45px;
+    padding-bottom: 60px;
+}
+
+.page-header {
+    margin-bottom: 32px;
+    padding: 35px;
+    border-radius: 20px;
+    background: linear-gradient(
+        120deg,
+        #312e81,
+        #4f46e5 60%,
+        #7c3aed
+    );
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.page-header::before {
+    content: '';
+    position: absolute;
+    width: 230px;
+    height: 230px;
+    border-radius: 50%;
+    border: 35px solid rgba(255,255,255,0.08);
+    right: -55px;
+    top: -100px;
+}
+
+.page-header::after {
+    content: '';
+    position: absolute;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.07);
+    right: 170px;
+    bottom: -100px;
+}
+
+.page-header h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(26px, 4vw, 36px);
+    font-weight: 700;
+    margin-bottom: 8px;
+    position: relative;
+    z-index: 1;
+}
+
+.page-header p {
+    font-size: 14px;
+    color: rgba(255,255,255,0.82);
+    position: relative;
+    z-index: 1;
+}
+
+
+/* =========================================
+   4. MAIN LAYOUT
+========================================= */
+
+.layout {
+    display: grid;
+    grid-template-columns: 340px minmax(0, 1fr);
+    align-items: start;
+    gap: 25px;
+}
+
+.results {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+
+/* =========================================
+   5. CARD COMPONENT
+========================================= */
+
+.card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 25px;
+    box-shadow: var(--shadow);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: var(--shadow-hover);
+}
+
+.card h2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 19px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.card h2::before {
+    content: '';
+    width: 5px;
+    height: 23px;
+    border-radius: 5px;
+    background: linear-gradient(
+        to bottom,
+        var(--primary),
+        var(--secondary)
+    );
+}
+
+
+/* =========================================
+   6. INPUT SECTION
+========================================= */
+
+#card-input {
+    position: sticky;
+    top: 100px;
+}
+
+#card-input h2 {
+    margin-bottom: 22px;
+}
+
+#manual-area label,
+#upload-csv-area label,
+.field label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 9px;
+}
+
+textarea,
+input[type="file"],
+select {
+    width: 100%;
+    border: 1px solid var(--border);
+    background: #f8fafc;
+    color: var(--text);
+    border-radius: 11px;
+    padding: 13px 14px;
+    outline: none;
+    transition: all 0.25s ease;
+}
+
+textarea {
+    min-height: 145px;
+    resize: vertical;
+    line-height: 1.8;
+}
+
+textarea:focus,
+input[type="file"]:focus,
+select:focus {
+    border-color: var(--primary);
+    background: white;
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.10);
+}
+
+textarea::placeholder {
+    color: #94a3b8;
+}
+
+#info-count {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+#btn-sample {
+    display: block;
+    margin-top: 10px;
+    padding: 8px 12px;
+    color: var(--primary);
+    background: var(--primary-light);
+    border: none;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    transition: 0.2s ease;
+}
+
+#btn-sample:hover {
+    background: #e0e7ff;
+    transform: translateY(-1px);
+}
+
+
+/* =========================================
+   7. MODE SWITCH
+========================================= */
+
+.mode-switch,
+.chart-switch {
+    display: flex;
+    gap: 5px;
+    padding: 5px;
+    background: #f1f5f9;
+    border-radius: 11px;
+    margin-bottom: 22px;
+}
+
+.mode-switch button,
+.chart-switch button {
+    flex: 1;
+    padding: 10px 8px;
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    transition: all 0.25s ease;
+}
+
+.mode-switch button:hover,
+.chart-switch button:hover {
+    color: var(--primary);
+}
+
+.mode-switch button[aria-selected="true"],
+.chart-switch button[aria-selected="true"] {
+    color: var(--primary);
+    background: white;
+    box-shadow: 0 2px 8px rgba(15,23,42,0.07);
+}
+
+
+/* =========================================
+   8. FIELDSET & SELECT
+========================================= */
+
+fieldset {
+    border: 1px solid var(--border);
+    border-radius: 11px;
+    padding: 14px;
+    margin: 22px 0;
+}
+
+fieldset legend {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-muted);
+    padding: 0 7px;
+}
+
+fieldset label {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin: 9px 0;
+    font-size: 13px;
+    color: var(--text);
+    cursor: pointer;
+}
+
+input[type="radio"] {
+    accent-color: var(--primary);
+    width: 16px;
+    height: 16px;
+}
+
+.field {
+    margin-bottom: 22px;
+}
+
+select {
+    cursor: pointer;
+}
+
+
+/* =========================================
+   9. BUTTONS
+========================================= */
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 17px;
+}
+
+.actions button {
+    border: none;
+    padding: 11px 17px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 700;
+    transition: all 0.25s ease;
+}
+
+#btn-hitung {
+    flex: 1;
+    color: white;
+    background: linear-gradient(
+        135deg,
+        var(--primary),
+        var(--secondary)
+    );
+    box-shadow: 0 4px 12px rgba(79,70,229,0.22);
+}
+
+#btn-hitung:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 18px rgba(79,70,229,0.3);
+}
+
+#btn-reset {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+#btn-reset:hover {
+    background: #fecaca;
+}
+
+#btn-copy-table,
+#btn-export-csv {
+    color: var(--primary);
+    background: var(--primary-light);
+}
+
+#btn-copy-table:hover,
+#btn-export-csv:hover {
+    background: #e0e7ff;
+    transform: translateY(-2px);
+}
+
+
+/* =========================================
+   10. ALERT & HINT
+========================================= */
+
+.alert {
+    margin-top: 15px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    color: var(--danger);
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    font-size: 13px;
+}
+
+.hint {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 8px;
+}
+
+#csv-filename {
+    display: block;
+    color: var(--success);
+    font-size: 12px;
+    margin-top: 10px;
+    font-weight: 600;
+}
+
+
+/* =========================================
+   11. KPI / STATISTICS CARDS
+========================================= */
+
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.kpi {
+    min-width: 0;
+    padding: 19px 15px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.kpi::after {
+    content: '';
+    position: absolute;
+    width: 55px;
+    height: 55px;
+    right: -20px;
+    top: -20px;
+    background: var(--primary-light);
+    border-radius: 50%;
+}
+
+.kpi:hover {
+    transform: translateY(-5px);
+    border-color: #c7d2fe;
+    box-shadow: var(--shadow-hover);
+}
+
+.kpi-label {
+    display: block;
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 700;
+    margin-bottom: 9px;
+    position: relative;
+    z-index: 1;
+}
+
+.kpi strong {
+    display: block;
+    color: var(--primary);
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(17px, 2vw, 25px);
+    font-weight: 700;
+    overflow-wrap: anywhere;
+    position: relative;
+    z-index: 1;
+}
+
+
+/* =========================================
+   12. CHART / VISUALIZATION
+========================================= */
+
+#card-visualisasi {
+    overflow: hidden;
+}
+
+#chart-area {
+    width: 100%;
+    min-height: 220px;
+    padding: 15px 5px;
+    background: #f8faff;
+    border: 1px solid #edf0fa;
+    border-radius: 12px;
+    overflow-x: auto;
+}
+
+#chart-svg {
+    display: block;
+    width: 100%;
+    min-width: 320px;
+    height: auto;
+    min-height: 220px;
+}
+
+#chart-svg text {
+    font-family: 'Inter', sans-serif;
+    fill: #64748b;
+    font-size: 11px;
+}
+
+#chart-svg rect {
+    transition: opacity 0.2s ease;
+}
+
+#chart-svg rect:hover {
+    opacity: 0.75;
+}
+
+#chart-svg line {
+    stroke: #cbd5e1;
+}
+
+#chart-note {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 13px;
+    line-height: 1.7;
+}
+
+
+/* =========================================
+   13. OUTLIER SECTION
+========================================= */
+
+#card-outlier > p {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 12px 0;
+}
+
+#badge-iqr {
+    display: inline-block;
+    padding: 5px 12px;
+    color: var(--primary);
+    background: var(--primary-light);
+    border-radius: 7px;
+    font-weight: 700;
+}
+
+.fences {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+    padding: 15px;
+    background: #f8fafc;
+    border-radius: 11px;
+    margin: 15px 0;
+    font-size: 12px;
+}
+
+.fences dt {
+    color: var(--text-muted);
+}
+
+.fences dd {
+    font-weight: 700;
+    color: var(--text);
+    text-align: right;
+}
+
+#outlier-list {
+    color: var(--danger);
+    font-weight: 700;
+}
+
+
+/* =========================================
+   14. RESULTS TABLE
+========================================= */
+
+#card-hasil-lengkap {
+    overflow: hidden;
+}
+
+#card-hasil-lengkap .actions {
+    margin-bottom: 18px;
+}
+
+#tabel-hasil {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    text-align: left;
+}
+
+#tabel-hasil thead {
+    background: linear-gradient(
+        120deg,
+        #312e81,
+        #4f46e5
+    );
+    color: white;
+}
+
+#tabel-hasil th {
+    padding: 14px 13px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+#tabel-hasil td {
+    padding: 13px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+}
+
+#tabel-hasil tbody tr {
+    transition: background 0.2s ease;
+}
+
+#tabel-hasil tbody tr:nth-child(even) {
+    background: #f8faff;
+}
+
+#tabel-hasil tbody tr:hover {
+    background: #eef2ff;
+}
+
+#tabel-hasil tbody td:first-child {
+    color: var(--text-muted);
+    font-weight: 600;
+    width: 50px;
+}
+
+#tabel-hasil tbody td:last-child {
+    color: var(--primary);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+
+/* =========================================
+   15. FOOTER
+========================================= */
+
+.site-footer {
+    background: #1e1b4b;
+    color: rgba(255,255,255,0.75);
+    text-align: center;
+    padding: 25px 15px;
+    margin-top: 30px;
+}
+
+.site-footer p {
+    font-size: 12px;
+    letter-spacing: 0.3px;
+}
+
+
+/* =========================================
+   16. RESPONSIVE TABLET
+========================================= */
+
+@media (max-width: 1000px) {
+
+    .layout {
+        grid-template-columns: 1fr;
+    }
+
+    #card-input {
+        position: static;
+    }
+
+    .kpi-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+}
+
+
+/* =========================================
+   17. RESPONSIVE MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+
+    .container {
+        width: 92%;
+    }
+
+    .site-header .container {
+        min-height: 68px;
+        flex-wrap: wrap;
+        padding: 10px 0;
+        gap: 8px;
+    }
+
+    .brand {
+        font-size: 23px;
+    }
+
+    .main-nav {
+        gap: 4px;
+    }
+
+    .main-nav a {
+        font-size: 11px;
+        padding: 8px 10px;
+    }
+
+    main.container {
+        padding-top: 25px;
+        padding-bottom: 35px;
+    }
+
+    .page-header {
+        padding: 25px 20px;
+        margin-bottom: 22px;
+    }
+
+    .page-header h1 {
+        font-size: 25px;
+    }
+
+    .page-header p {
+        font-size: 12px;
+    }
+
+    .layout {
+        gap: 18px;
+    }
+
+    .card {
+        padding: 19px;
+        border-radius: 13px;
+    }
+
+    .card h2 {
+        font-size: 16px;
+    }
+
+    .kpi-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .kpi {
+        padding: 15px 12px;
+    }
+
+    .kpi-label {
+        font-size: 10px;
+    }
+
+    .kpi strong {
+        font-size: 20px;
+    }
+
+    .fences {
+        grid-template-columns: 1fr;
+        gap: 5px;
+    }
+
+    .fences dd {
+        text-align: left;
+        margin-bottom: 9px;
+    }
+
+    #tabel-hasil {
+        font-size: 11px;
+        min-width: 480px;
+    }
+
+    #tabel-hasil th,
+    #tabel-hasil td {
+        padding: 10px 8px;
+    }
+
+    #card-hasil-lengkap {
+        overflow-x: auto;
+    }
+
+    .actions button {
+        font-size: 12px;
+        padding: 10px 12px;
+    }
+
+}
+
+
+/* =========================================
+   18. SMALL MOBILE
+========================================= */
+
+@media (max-width: 380px) {
+
+    .main-nav a {
+        font-size: 10px;
+        padding: 7px;
+    }
+
+    .kpi-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .kpi strong {
+        font-size: 17px;
+    }
+
+    .mode-switch button,
+    .chart-switch button {
+        font-size: 10px;
+    }
+
+}
+
+
+/* =========================================
+   19. ACCESSIBILITY & ANIMATION
+========================================= */
+
+button:focus-visible,
+a:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+input:focus-visible {
+    outline: 3px solid rgba(79, 70, 229, 0.3);
+    outline-offset: 3px;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}
