@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<!--
+  HALAMAN PROBABILITAS (SOAL 2): hanya kerangka HTML.
+  - Gaya        -> css/probabilitas.css (sertakan aturan: [hidden]{display:none !important})
+  - Perhitungan -> js/probalitas.js (fungsi murni tanpa akses DOM)
+  - Penghubung  -> js/app.js (dipakai bersama halaman statistik, jadi
+                   cek dulu apakah elemen ada sebelum memasang event)
+  - Submenu memakai tombol [data-sub] yang menampilkan #panel-<nama>;
+    elemen disembunyikan dengan atribut `hidden`, tab aktif memakai aria-selected="true".
+-->
+<html lang="id">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Probabilitas · StatKit</title>
+    <link rel="stylesheet" href="css/probabilitas.css">
+    <script src="js/probalitas.js" defer></script>
+    <script src="js/app.js" defer></script>
+</head>
+
+<body>
+
+    <!-- ============ HEADER & NAVIGASI ============ -->
+    <header class="site-header">
+        <div class="container">
+            <a class="brand" href="statistika.html">StatKit</a>
+            <nav class="main-nav" aria-label="Menu utama">
+                <a href="statistika.html">Statistika Deskriptif</a>
+                <a href="probabilitas.html" aria-current="page">Probabilitas</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <header class="page-header">
+            <h1>Kalkulator Probabilitas</h1>
+            <p>Desimal boleh ditulis dengan koma (0,3) atau titik (0.3).</p>
+        </header>
+
+        <nav class="sub-nav" role="tablist" aria-label="Submenu probabilitas">
+            <button id="sub-dasar" data-sub="dasar" role="tab" aria-selected="true">Probabilitas dasar</button>
+            <button id="sub-bayes" data-sub="bayes" role="tab" aria-selected="false">Bersyarat &amp; Bayes</button>
+            <button id="sub-distribusi" data-sub="distribusi" role="tab" aria-selected="false">Distribusi
+                (bonus)</button>
+        </nav>
+
+        <!-- ============ A. PROBABILITAS DASAR ============ -->
+        <div id="panel-dasar" class="panel layout">
+            <form id="form-dasar" class="card" novalidate>
+                <h2>Parameter kejadian</h2>
+                <div class="field"><label for="input-pa">P(A)</label><input id="input-pa" inputmode="decimal"
+                        value="0,3"></div>
+                <div class="field"><label for="input-pb">P(B)</label><input id="input-pb" inputmode="decimal"
+                        value="0,4"></div>
+                <div class="field">
+                    <label for="select-relasi">Hubungan kejadian</label>
+                    <select id="select-relasi">
+                        <option value="exclusive">Saling lepas: P(A∩B) = 0</option>
+                        <option value="independent">Independen: P(A∩B) = P(A) × P(B)</option>
+                        <option value="custom">P(A∩B) diketahui</option>
+                    </select>
+                </div>
+                <div id="wrapper-pab" class="field" hidden>
+                    <label for="input-pab">P(A∩B)</label><input id="input-pab" inputmode="decimal" value="0,1">
+                </div>
+                <div class="actions">
+                    <button id="btn-hitung-prob" type="submit">Hitung peluang</button>
+                    <button id="btn-reset-prob" type="button">Reset</button>
+                </div>
+                <p id="alert-prob" class="alert" role="alert" hidden></p>
+            </form>
+
+            <section class="card">
+                <h2>Hasil</h2>
+                <div class="kpi-grid">
+                    <div class="kpi"><span class="kpi-label">P(A)</span><strong id="prob-pa">–</strong></div>
+                    <div class="kpi"><span class="kpi-label">Komplemen P(A')</span><strong id="prob-pac">–</strong>
+                    </div>
+                    <div class="kpi"><span class="kpi-label">P(B)</span><strong id="prob-pb">–</strong></div>
+                    <div class="kpi"><span class="kpi-label">Komplemen P(B')</span><strong id="prob-pbc">–</strong>
+                    </div>
+                    <div class="kpi"><span class="kpi-label">Gabungan P(A∪B)</span><strong id="prob-union">–</strong>
+                    </div>
+                    <div class="kpi"><span class="kpi-label">Irisan P(A∩B)</span><strong id="prob-inter">–</strong>
+                    </div>
+                </div>
+                <p class="status">
+                    <span id="chip-lepas">Saling lepas: –</span>
+                    <span id="chip-independen">Independen: –</span>
+                </p>
+                <h3>Langkah perhitungan</h3>
+                <pre id="formula-walkthrough">–</pre>
+            </section>
+        </div>
+
+        <!-- ============ B. BERSYARAT & BAYES ============ -->
+        <div id="panel-bayes" class="panel" hidden>
+            <section class="card">
+                <h2>Probabilitas bersyarat P(A|B)</h2>
+                <p class="formula">P(A|B) = P(A∩B) / P(B)</p>
+                <div class="field"><label for="input-cond-ab">P(A∩B)</label><input id="input-cond-ab"
+                        inputmode="decimal" value="0,12"></div>
+                <div class="field"><label for="input-cond-b">P(B)</label><input id="input-cond-b" inputmode="decimal"
+                        value="0,4"></div>
+                <button id="btn-cond" type="button">Hitung</button>
+                <p>P(A|B) = <strong id="res-cond">–</strong></p>
+                <p id="cond-interpretasi"></p>
+                <p id="alert-cond" class="alert" role="alert" hidden></p>
+            </section>
+
+            <section class="card">
+                <h2>Teorema Bayes: filter email phishing</h2>
+                <p class="formula">P(Phishing|Ditandai) = P(Ditandai|Phishing) · P(Phishing) / P(Ditandai)</p>
+                <div class="layout">
+                    <form id="form-bayes" novalidate>
+                        <div class="field"><label for="input-prevalensi">Prevalensi phishing (%)</label><input
+                                id="input-prevalensi" inputmode="decimal" value="8"></div>
+                        <div class="field"><label for="input-sensitivitas">Sensitivitas deteksi: P(Ditandai | Phishing)
+                                (%)</label><input id="input-sensitivitas" inputmode="decimal" value="92"></div>
+                        <div class="field"><label for="input-fpr">False positive: P(Ditandai | Email normal)
+                                (%)</label><input id="input-fpr" inputmode="decimal" value="3"></div>
+                        <div class="actions">
+                            <button id="btn-bayes" type="submit">Analisis Bayes</button>
+                            <button id="btn-reset-bayes" type="button">Reset</button>
+                        </div>
+                        <p id="alert-bayes" class="alert" role="alert" hidden></p>
+                    </form>
+
+                    <div class="results">
+                        <div class="kpi-grid">
+                            <div class="kpi"><span class="kpi-label">P(Ditandai)</span><strong
+                                    id="bayes-pflag">–</strong></div>
+                            <div class="kpi"><span class="kpi-label">P(Phishing | Ditandai)</span><strong
+                                    id="bayes-posterior">–</strong></div>
+                        </div>
+                        <div class="proportion" aria-label="Komposisi email yang ditandai">
+                            <div id="bar-tp" class="bar bar-tp" style="width:50%">–</div>
+                            <div id="bar-fp" class="bar bar-fp" style="width:50%">–</div>
+                        </div>
+                        <aside class="callout">
+                            <h3>Interpretasi</h3>
+                            <p id="bayes-interpretasi">Tekan Analisis Bayes untuk melihat interpretasi hasil.</p>
+                        </aside>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ============ BONUS: DISTRIBUSI ============ -->
+        <div id="panel-distribusi" class="panel" hidden>
+            <section class="card">
+                <h2>Distribusi Binomial</h2>
+                <p class="formula">P(X=k) = C(n,k) · pᵏ · (1−p)ⁿ⁻ᵏ</p>
+                <div class="field"><label for="input-bin-n">n</label><input id="input-bin-n" inputmode="numeric"
+                        value="10"></div>
+                <div class="field"><label for="input-bin-p">p</label><input id="input-bin-p" inputmode="decimal"
+                        value="0,5"></div>
+                <div class="field"><label for="input-bin-k">k</label><input id="input-bin-k" inputmode="numeric"
+                        value="5"></div>
+                <button id="btn-bin" type="button">Hitung</button>
+                <p>P(X = k) = <strong id="res-bin-eq">–</strong></p>
+                <p>P(X ≤ k) = <strong id="res-bin-le">–</strong></p>
+                <p id="alert-bin" class="alert" role="alert" hidden></p>
+            </section>
+
+            <section class="card">
+                <h2>Distribusi Poisson</h2>
+                <p class="formula">P(X=k) = λᵏ · e⁻ˡ / k!</p>
+                <div class="field"><label for="input-poi-l">λ (rata-rata kejadian)</label><input id="input-poi-l"
+                        inputmode="decimal" value="4,2"></div>
+                <div class="field"><label for="input-poi-k">k</label><input id="input-poi-k" inputmode="numeric"
+                        value="4"></div>
+                <button id="btn-poi" type="button">Hitung</button>
+                <p>P(X = k) = <strong id="res-poi-eq">–</strong></p>
+                <p>P(X ≤ k) = <strong id="res-poi-le">–</strong></p>
+                <p id="alert-poi" class="alert" role="alert" hidden></p>
+            </section>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <p>Statistika · Teknik Informatika · Universitas Perjuangan Tasikmalaya · 2026/2027</p>
+    </footer>
+
+</body>
+
+</html>

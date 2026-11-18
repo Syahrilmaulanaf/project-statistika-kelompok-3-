@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Statistika Deskriptif · Project Statistika</title>
+    <link rel="stylesheet" href="css/statistik.css">
+    <script src="js/statistika.js" defer></script>
+    <script src="js/app.js" defer></script>
+</head>
+
+<body>
+
+    <!-- ============ HEADER & NAVIGASI ============ -->
+    <header class="site-header">
+        <div class="container">
+            <a class="brand" href="statistika.html">StatKit</a>
+            <nav class="main-nav" aria-label="Menu utama">
+                <a href="statistika.html" aria-current="page">Statistika Deskriptif</a>
+                <a href="probabilitas.html">Probabilitas</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <header class="page-header">
+            <h1>Statistika Deskriptif</h1>
+            <p>Masukkan data numerik secara manual atau unggah file CSV, lalu tekan Hitung.</p>
+        </header>
+
+        <div class="layout">
+
+            <!-- ============ INPUT ============ -->
+            <section id="card-input" class="card">
+                <h2>Input data</h2>
+
+                <div class="mode-switch" role="tablist" aria-label="Mode input">
+                    <button id="tab-manual" type="button" role="tab" aria-selected="true">Input manual</button>
+                    <button id="tab-csv" type="button" role="tab" aria-selected="false">Upload CSV</button>
+                </div>
+
+                <div id="manual-area">
+                    <label for="textarea-data">Data numerik</label>
+                    <textarea id="textarea-data" rows="6"
+                        placeholder="Masukkan angka, pisahkan dengan koma, titik koma, spasi, atau baris baru">2, 4, 4, 5, 7, 9, 10, 12, 30</textarea>
+                    <span id="info-count">0 data</span>
+                    <button id="btn-sample" type="button">Isi data contoh</button>
+                </div>
+
+                <div id="upload-csv-area" hidden>
+                    <label for="input-csv">File CSV</label>
+                    <input id="input-csv" type="file" accept=".csv,.txt,text/csv">
+                    <p class="hint">Pemisah koma atau titik koma, desimal titik atau koma. Baris header diabaikan.</p>
+                    <span id="csv-filename"></span>
+                </div>
+
+                <fieldset id="opsi-jenis-data">
+                    <legend>Jenis data</legend>
+                    <label><input type="radio" name="calc-type" value="sample" checked> Sampel (n−1)</label>
+                    <label><input type="radio" name="calc-type" value="population"> Populasi (n)</label>
+                </fieldset>
+
+                <div class="field">
+                    <label for="select-kuartil">Metode kuartil</label>
+                    <select id="select-kuartil">
+                        <option value="linear">Interpolasi linear</option>
+                        <option value="halves">Median dua belahan</option>
+                    </select>
+                </div>
+
+                <div class="actions">
+                    <button id="btn-hitung" type="button">Hitung</button>
+                    <button id="btn-reset" type="button">Reset</button>
+                </div>
+                <p id="alert-area" class="alert" role="alert" hidden></p>
+            </section>
+
+            <!-- ============ HASIL ============ -->
+            <div id="hasil-area" class="results">
+
+                <!-- Ringkasan -->
+                <section class="kpi-grid" aria-label="Ringkasan">
+                    <div class="kpi"><span class="kpi-label">Jumlah data (n)</span><strong id="kpi-n">–</strong></div>
+                    <div class="kpi"><span class="kpi-label">Total (Σx)</span><strong id="kpi-sum">–</strong></div>
+                    <div class="kpi"><span class="kpi-label">Mean</span><strong id="kpi-mean">–</strong></div>
+                    <div class="kpi"><span class="kpi-label">Median</span><strong id="kpi-median">–</strong></div>
+                    <div class="kpi"><span class="kpi-label">Modus</span><strong id="kpi-mode">–</strong></div>
+                </section>
+
+                <!-- Visualisasi -->
+                <section id="card-visualisasi" class="card">
+                    <h2>Visualisasi</h2>
+                    <div class="chart-switch" role="tablist" aria-label="Jenis grafik">
+                        <button id="view-hist" type="button" role="tab" aria-selected="true">Histogram</button>
+                        <button id="view-box" type="button" role="tab" aria-selected="false">Boxplot</button>
+                    </div>
+                    <div id="chart-area">
+                        <svg id="chart-svg" viewBox="0 0 640 260" role="img" aria-label="Grafik distribusi data"></svg>
+                    </div>
+                    <p id="chart-note"></p>
+                </section>
+
+                <!-- Outlier -->
+                <section id="card-outlier" class="card">
+                    <h2>Deteksi outlier (aturan 1,5 × IQR)</h2>
+                    <p>IQR: <span id="badge-iqr">–</span></p>
+                    <dl class="fences">
+                        <dt>Pagar bawah (Q1 − 1,5 × IQR)</dt>
+                        <dd id="fence-low">–</dd>
+                        <dt>Pagar atas (Q3 + 1,5 × IQR)</dt>
+                        <dd id="fence-high">–</dd>
+                    </dl>
+                    <p>Nilai outlier: <span id="outlier-list">–</span></p>
+                </section>
+
+                <!-- Tabel hasil lengkap (14 ukuran) -->
+                <section id="card-hasil-lengkap" class="card">
+                    <h2>Hasil perhitungan lengkap</h2>
+                    <div class="actions">
+                        <button id="btn-copy-table" type="button">Salin tabel</button>
+                        <button id="btn-export-csv" type="button">Ekspor CSV</button>
+                    </div>
+                    <table id="tabel-hasil">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Ukuran statistik</th>
+                                <th>Notasi</th>
+                                <th>Hasil</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Jumlah data (n)</td>
+                                <td>n</td>
+                                <td id="res-n">–</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Total nilai (Σx)</td>
+                                <td>Σx</td>
+                                <td id="res-sum">–</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Mean (rata-rata)</td>
+                                <td>x̄</td>
+                                <td id="res-mean">–</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>Median</td>
+                                <td>Me</td>
+                                <td id="res-median">–</td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>Modus</td>
+                                <td>Mo</td>
+                                <td id="res-mode">–</td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td>Nilai minimum</td>
+                                <td>min</td>
+                                <td id="res-min">–</td>
+                            </tr>
+                            <tr>
+                                <td>7</td>
+                                <td>Nilai maksimum</td>
+                                <td>max</td>
+                                <td id="res-max">–</td>
+                            </tr>
+                            <tr>
+                                <td>8</td>
+                                <td>Range (jangkauan)</td>
+                                <td>R</td>
+                                <td id="res-range">–</td>
+                            </tr>
+                            <tr>
+                                <td>9</td>
+                                <td>Varians (<span id="lbl-var">sampel</span>)</td>
+                                <td>s²</td>
+                                <td id="res-var">–</td>
+                            </tr>
+                            <tr>
+                                <td>10</td>
+                                <td>Standar deviasi (<span id="lbl-sd">sampel</span>)</td>
+                                <td>s</td>
+                                <td id="res-sd">–</td>
+                            </tr>
+                            <tr>
+                                <td>11</td>
+                                <td>Kuartil 1 (Q1)</td>
+                                <td>Q1</td>
+                                <td id="res-q1">–</td>
+                            </tr>
+                            <tr>
+                                <td>12</td>
+                                <td>Kuartil 3 (Q3)</td>
+                                <td>Q3</td>
+                                <td id="res-q3">–</td>
+                            </tr>
+                            <tr>
+                                <td>13</td>
+                                <td>Interquartile Range (IQR)</td>
+                                <td>IQR</td>
+                                <td id="res-iqr">–</td>
+                            </tr>
+                            <tr>
+                                <td>14</td>
+                                <td>Deteksi outlier</td>
+                                <td>1,5×IQR</td>
+                                <td id="res-outlier">–</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <p>Statistika · Teknik Informatika · Universitas Perjuangan Tasikmalaya · 2026/2027</p>
+    </footer>
+
+</body>
+
+</html>
