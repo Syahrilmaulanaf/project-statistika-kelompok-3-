@@ -349,7 +349,6 @@ function initStatistik() {
     if (e) e.textContent = nilai;
   };
 
-  const DATA_CONTOH = '2, 4, 4, 5, 7, 9, 10, 12, 30';
   const ID_HASIL = [
     'res-n', 'res-sum', 'res-mean', 'res-median', 'res-mode', 'res-min', 'res-max',
     'res-range', 'res-var', 'res-sd', 'res-q1', 'res-q3', 'res-iqr', 'res-outlier',
@@ -779,8 +778,15 @@ function initStatistik() {
   /* ---------- pasang semua pendengar (event listener) ---------- */
   $('btn-hitung').addEventListener('click', hitung);
   $('btn-reset').addEventListener('click', reset);
+  // Data contoh diambil dari isi awal <textarea> di HTML (defaultValue), bukan dari JS.
   $('btn-sample').addEventListener('click', () => {
-    $('textarea-data').value = DATA_CONTOH;
+    const contoh = $('textarea-data').defaultValue.trim();
+    if (!contoh) {
+      tampilkanPesan('Data contoh belum disediakan di HTML.', 'galat');
+      return;
+    }
+    $('textarea-data').value = contoh;
+    tampilkanPesan('');
     perbaruiJumlah();
   });
   $('textarea-data').addEventListener('input', perbaruiJumlah);
