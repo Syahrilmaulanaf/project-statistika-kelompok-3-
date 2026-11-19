@@ -1,0 +1,961 @@
+
+/* ==========================================
+   STATKIT - CLASSIC GREEN & CREAM THEME
+   Design inspired by your reference screenshot
+========================================== */
+
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --green: #12392e;
+    --green-dark: #0d3025;
+    --green-light: #e5eee8;
+    --orange: #dc7900;
+
+    --cream: #f4f1e8;
+    --cream-dark: #e8e4d8;
+    --white: #ffffff;
+
+    --text: #26352f;
+    --muted: #68746d;
+    --border: #d8d5cb;
+
+    --radius: 18px;
+    --shadow: 0 4px 14px rgba(18, 57, 46, 0.07);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    line-height: 1.7;
+    min-height: 100vh;
+}
+
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+
+/* ==========================================
+   HEADER / NAVBAR
+========================================== */
+
+.site-header {
+    background: var(--green);
+    color: white;
+    border-bottom: 7px solid var(--orange);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.site-header .container {
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+    min-height: 150px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+}
+
+/* Logo StatKit */
+.brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+
+    color: white;
+    text-decoration: none;
+
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 35px;
+    font-weight: bold;
+    letter-spacing: -1px;
+}
+
+/* Logo kotak orange */
+.brand::before {
+    content: "∫";
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 48px;
+    height: 48px;
+
+    background: var(--orange);
+    color: white;
+
+    border-radius: 11px;
+
+    font-family: Georgia, serif;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+/* Navigation */
+.main-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+.main-nav a {
+    display: inline-block;
+
+    text-decoration: none;
+    color: #d1e0d9;
+
+    font-size: 17px;
+    font-weight: 600;
+
+    padding: 12px 22px;
+    border-radius: 12px;
+
+    transition: 0.25s;
+}
+
+.main-nav a:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.main-nav a[aria-current="page"] {
+    background: white;
+    color: var(--green);
+}
+
+/* ==========================================
+   MAIN CONTAINER
+========================================== */
+
+.container {
+    width: min(1200px, 92%);
+    margin: auto;
+}
+
+/* ==========================================
+   PAGE TITLE
+========================================== */
+
+.page-header {
+    padding: 48px 0 30px;
+}
+
+.page-header h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: 900;
+    font-size: clamp(38px, 5vw, 60px);
+    line-height: 1.18;
+    letter-spacing: -1.5px;
+
+    color: var(--green);
+    margin-bottom: 18px;
+}
+
+.page-header p {
+    font-size: 16px;
+    color: #555f58;
+}
+
+/* ==========================================
+   MAIN LAYOUT
+========================================== */
+
+.layout {
+    display: grid;
+    grid-template-columns: 350px minmax(0, 1fr);
+    gap: 25px;
+    align-items: start;
+    padding-bottom: 50px;
+}
+
+#card-input {
+    position: sticky;
+    top: 175px;
+}
+
+.results {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    min-width: 0;
+}
+
+/* ==========================================
+   CARD
+========================================== */
+
+.card {
+    background: var(--white);
+    border: 1px solid #dcd9ce;
+    border-top: 7px solid var(--green);
+
+    border-radius: 20px;
+    padding: 28px;
+
+    box-shadow: var(--shadow);
+}
+
+.card h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    color: var(--green);
+
+    font-size: 29px;
+    font-weight: 800;
+    line-height: 1.35;
+
+    margin-bottom: 22px;
+}
+
+/* ==========================================
+   MODE SWITCH
+========================================== */
+
+.mode-switch,
+.chart-switch {
+    background: var(--cream-dark);
+    border: 1px solid #d6d2c5;
+    border-radius: 14px;
+
+    padding: 7px;
+    gap: 5px;
+
+    display: flex;
+    flex-wrap: wrap;
+
+    margin-bottom: 24px;
+}
+
+.mode-switch button,
+.chart-switch button {
+    border: none;
+    background: transparent;
+    color: #46534c;
+
+    padding: 12px 16px;
+    border-radius: 10px;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    flex: 1;
+}
+
+.mode-switch button:hover,
+.chart-switch button:hover {
+    background: #f7f6f0;
+    color: var(--green);
+}
+
+.mode-switch button[aria-selected="true"],
+.chart-switch button[aria-selected="true"] {
+    background: var(--green);
+    color: white;
+}
+
+/* ==========================================
+   LABEL & INPUT
+========================================== */
+
+label,
+legend {
+    color: var(--green);
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+textarea,
+select,
+input[type="file"] {
+    display: block;
+    width: 100%;
+
+    background: #f7f5ef;
+    color: var(--text);
+
+    border: 2px solid #d8d5cb;
+    border-radius: 12px;
+
+    padding: 15px;
+
+    transition: 0.2s;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 150px;
+    line-height: 1.7;
+}
+
+textarea::placeholder {
+    color: #85877e;
+}
+
+textarea:focus,
+select:focus,
+input[type="file"]:focus {
+    outline: none;
+    border-color: var(--green);
+    box-shadow: 0 0 0 3px rgba(18, 57, 46, 0.1);
+}
+
+select {
+    cursor: pointer;
+}
+
+input[type="file"] {
+    font-size: 14px;
+}
+
+/* ==========================================
+   DATA COUNTER
+========================================== */
+
+#info-count {
+    display: inline-block;
+    color: var(--muted);
+    font-size: 13px;
+    margin: 9px 0 14px;
+}
+
+#csv-filename {
+    display: block;
+    margin-top: 10px;
+    color: var(--green);
+    font-size: 13px;
+    overflow-wrap: anywhere;
+}
+
+.hint {
+    color: var(--muted);
+    font-size: 13px;
+    margin: 10px 0;
+}
+
+/* ==========================================
+   SAMPLE BUTTON
+========================================== */
+
+#btn-sample {
+    width: 100%;
+    background: var(--cream-dark);
+    color: var(--green);
+
+    border: 1px solid #d6d2c5;
+    border-radius: 10px;
+
+    padding: 12px;
+    font-weight: 700;
+    font-size: 14px;
+
+    margin-bottom: 20px;
+}
+
+#btn-sample:hover {
+    background: #dcd8cb;
+}
+
+/* ==========================================
+   RADIO / FIELDSET
+========================================== */
+
+fieldset {
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    padding: 16px;
+    margin: 20px 0;
+}
+
+fieldset legend {
+    font-family: Georgia, "Times New Roman", serif;
+    padding: 0 7px;
+}
+
+#opsi-jenis-data label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    color: #4a554f;
+    font-size: 14px;
+    font-weight: 500;
+
+    margin: 12px 0;
+    cursor: pointer;
+}
+
+input[type="radio"] {
+    accent-color: var(--green);
+    width: 17px;
+    height: 17px;
+}
+
+.field {
+    margin: 20px 0;
+}
+
+/* ==========================================
+   ACTION BUTTONS
+========================================== */
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.actions button {
+    border: none;
+    border-radius: 11px;
+
+    padding: 13px 20px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+/* Hitung */
+#btn-hitung {
+    flex: 1;
+    background: var(--green);
+    color: white;
+}
+
+#btn-hitung:hover {
+    background: #205342;
+    transform: translateY(-1px);
+}
+
+/* Reset */
+#btn-reset {
+    background: var(--cream-dark);
+    color: var(--green);
+}
+
+#btn-reset:hover {
+    background: #d9d5c8;
+}
+
+/* Salin dan ekspor */
+#btn-copy-table,
+#btn-export-csv {
+    background: var(--green);
+    color: white;
+}
+
+#btn-copy-table:hover,
+#btn-export-csv:hover {
+    background: #205342;
+}
+
+/* ==========================================
+   ALERT
+========================================== */
+
+.alert {
+    background: #fff6d8;
+    border: 1px solid #ead783;
+
+    color: #765b12;
+    border-radius: 11px;
+
+    padding: 13px 16px;
+    margin-top: 15px;
+
+    font-size: 14px;
+}
+
+/* ==========================================
+   KPI STATISTICS CARDS
+========================================== */
+
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+}
+
+.kpi {
+    background: white;
+    border: 1px solid #dcd9ce;
+    border-top: 5px solid var(--green);
+
+    border-radius: 15px;
+    padding: 20px;
+
+    box-shadow: var(--shadow);
+    transition: 0.2s;
+}
+
+.kpi:hover {
+    transform: translateY(-3px);
+}
+
+.kpi-label {
+    display: block;
+    color: #6c766e;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 7px;
+}
+
+.kpi strong {
+    display: block;
+    color: var(--green);
+
+    font-size: 28px;
+    font-weight: 800;
+
+    overflow-wrap: anywhere;
+}
+
+/* ==========================================
+   CHART
+========================================== */
+
+#card-visualisasi {
+    overflow: hidden;
+}
+
+#chart-area {
+    width: 100%;
+    overflow-x: auto;
+    padding: 10px 0;
+}
+
+#chart-svg {
+    display: block;
+    width: 100%;
+    min-width: 450px;
+
+    height: auto;
+    min-height: 250px;
+
+    background: #f8f6f0;
+    border: 1px solid #e7e3d8;
+    border-radius: 13px;
+}
+
+#chart-note {
+    color: var(--muted);
+    font-size: 14px;
+    margin-top: 14px;
+}
+
+/* SVG chart text */
+#chart-svg text {
+    font-family: "Segoe UI", Arial, sans-serif;
+    fill: #45564d;
+    font-size: 12px;
+}
+
+#chart-svg rect {
+    transition: 0.2s;
+}
+
+#chart-svg rect:hover {
+    opacity: 0.75;
+}
+
+/* ==========================================
+   OUTLIER
+========================================== */
+
+#card-outlier p {
+    color: #5f6b62;
+    font-size: 15px;
+    margin: 14px 0;
+}
+
+#badge-iqr {
+    display: inline-block;
+    background: #e7eee8;
+    color: var(--green);
+
+    padding: 5px 12px;
+    border-radius: 20px;
+
+    font-weight: 800;
+}
+
+.fences {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 15px;
+    margin: 18px 0;
+}
+
+.fences dt {
+    color: #68746c;
+    font-size: 13px;
+}
+
+.fences dd {
+    background: #f7f5ef;
+    border: 1px solid #ddd9ce;
+    border-radius: 10px;
+
+    padding: 12px;
+
+    color: var(--green);
+    font-size: 15px;
+    font-weight: 800;
+}
+
+/* ==========================================
+   RESULTS TABLE
+========================================== */
+
+#card-hasil-lengkap {
+    overflow-x: auto;
+}
+
+#tabel-hasil {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+#tabel-hasil thead {
+    background: var(--green);
+    color: white;
+}
+
+#tabel-hasil th {
+    padding: 15px 12px;
+    text-align: left;
+    white-space: nowrap;
+    font-weight: 700;
+}
+
+#tabel-hasil td {
+    padding: 13px 12px;
+    border-bottom: 1px solid #e5e1d7;
+}
+
+#tabel-hasil tbody tr:nth-child(even) {
+    background: #f7f5ef;
+}
+
+#tabel-hasil tbody tr:hover {
+    background: #e9eee8;
+}
+
+#tabel-hasil tbody td:first-child {
+    color: #7b827b;
+}
+
+#tabel-hasil tbody td:last-child {
+    color: var(--green);
+    font-weight: 750;
+}
+
+#tabel-hasil tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* ==========================================
+   FOOTER
+========================================== */
+
+.site-footer {
+    background: var(--green);
+    color: #d5e1da;
+
+    border-top: 5px solid var(--orange);
+
+    text-align: center;
+    padding: 24px 15px;
+
+    font-size: 13px;
+}
+
+.site-footer p {
+    width: min(1200px, 92%);
+    margin: auto;
+}
+
+/* ==========================================
+   HIDDEN ELEMENT
+========================================== */
+
+[hidden] {
+    display: none !important;
+}
+
+/* ==========================================
+   TABLET
+========================================== */
+
+@media (max-width: 950px) {
+    .layout {
+        grid-template-columns: 1fr;
+        gap: 22px;
+    }
+
+    #card-input {
+        position: static;
+    }
+
+    .page-header {
+        padding-top: 35px;
+    }
+
+    .kpi-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 600px) {
+    body {
+        font-size: 15px;
+    }
+
+    .container {
+        width: 90%;
+    }
+
+    /* Navbar seperti referensi */
+    .site-header .container {
+        min-height: auto;
+        padding: 20px 12px 18px;
+        gap: 18px;
+    }
+
+    .brand {
+        font-size: 34px;
+    }
+
+    .brand::before {
+        width: 48px;
+        height: 48px;
+        font-size: 29px;
+    }
+
+    .main-nav {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+
+    .main-nav a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+
+        padding: 12px 7px;
+        font-size: 13px;
+        border-radius: 10px;
+    }
+
+    /* Heading */
+    .page-header {
+        padding: 38px 0 25px;
+    }
+
+    .page-header h1 {
+        font-size: 40px;
+        line-height: 1.35;
+        letter-spacing: -1px;
+    }
+
+    .page-header p {
+        font-size: 14px;
+        line-height: 1.8;
+    }
+
+    /* Layout */
+    .layout {
+        grid-template-columns: 1fr;
+        gap: 22px;
+        padding-bottom: 35px;
+    }
+
+    .results {
+        gap: 20px;
+    }
+
+    /* Cards */
+    .card {
+        padding: 20px 17px;
+        border-radius: 17px;
+        border-top-width: 6px;
+    }
+
+    .card h2 {
+        font-size: 25px;
+        margin-bottom: 19px;
+    }
+
+    /* Tabs */
+    .mode-switch,
+    .chart-switch {
+        border-radius: 13px;
+        padding: 6px;
+        gap: 4px;
+    }
+
+    .mode-switch button,
+    .chart-switch button {
+        padding: 11px 9px;
+        font-size: 13px;
+        border-radius: 9px;
+    }
+
+    /* Form */
+    label,
+    legend {
+        font-size: 15px;
+    }
+
+    textarea,
+    select,
+    input[type="file"] {
+        padding: 13px;
+        border-radius: 10px;
+        font-size: 14px;
+    }
+
+    textarea {
+        min-height: 135px;
+    }
+
+    fieldset {
+        padding: 14px;
+    }
+
+    /* Buttons */
+    .actions {
+        gap: 9px;
+    }
+
+    .actions button {
+        padding: 12px 14px;
+        font-size: 13px;
+    }
+
+    /* Statistics */
+    .kpi-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 11px;
+    }
+
+    .kpi {
+        padding: 16px 14px;
+        border-radius: 13px;
+    }
+
+    .kpi-label {
+        font-size: 12px;
+    }
+
+    .kpi strong {
+        font-size: 23px;
+    }
+
+    /* Chart */
+    #chart-svg {
+        min-width: 500px;
+        min-height: 220px;
+    }
+
+    #chart-area {
+        overflow-x: auto;
+    }
+
+    /* Outlier */
+    .fences {
+        grid-template-columns: 1fr;
+        gap: 9px;
+    }
+
+    .fences dd {
+        padding: 11px;
+    }
+
+    /* Table */
+    #tabel-hasil {
+        min-width: 550px;
+        font-size: 13px;
+    }
+
+    #tabel-hasil th,
+    #tabel-hasil td {
+        padding: 11px 10px;
+    }
+
+    #card-hasil-lengkap {
+        overflow-x: auto;
+    }
+
+    /* Footer */
+    .site-footer {
+        font-size: 12px;
+        line-height: 1.8;
+        padding: 22px 12px;
+    }
+}
+
+/* ==========================================
+   SMALL SCREEN
+========================================== */
+
+@media (max-width: 380px) {
+    .page-header h1 {
+        font-size: 34px;
+    }
+
+    .brand {
+        font-size: 29px;
+    }
+
+    .main-nav a {
+        font-size: 12px;
+        padding: 10px 5px;
+    }
+
+    .card {
+        padding: 16px 13px;
+    }
+
+    .card h2 {
+        font-size: 22px;
+    }
+
+    .kpi strong {
+        font-size: 20px;
+    }
+}
